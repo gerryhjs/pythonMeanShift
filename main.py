@@ -81,7 +81,7 @@ print("求解的拟合直线为:")
 print("y=" + str(round(w, 2)) + "x+" + str(round(b, 2)))
 
 print("pearson=" + str(pearsonr(data[0], data[1])[0]))
-# print("p-value=" + str(pearsonr(data[0], data[1])[1]))
+print("p-value=" + str(pearsonr(data[0], data[1])[1]))
 
 ##绘图
 plt.figure(1)
