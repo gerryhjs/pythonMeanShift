@@ -7,6 +7,7 @@ from itertools import cycle
 from scipy.optimize import leastsq
 
 lineExtraX = 1
+bandwidth = 1.5
 
 
 ##需要拟合的函数func :指定函数的形状
@@ -16,25 +17,24 @@ def func(inner_p, inner_x):
 
 
 ##偏差函数：x,y都是列表:这里的x,y更上面的Xi,Yi中是一一对应的
-def error(p, x, y):
-    return func(p, x) - y
+def error(p, inner_x, inner_y):
+    return func(p, inner_x) - inner_y
 
 
-# X = np.array(
-#     [[1, 1], [2, 2], [3, 2], [1, 1.5], [2, 2.5], [3.5, 2], [1, 1.5],
-#      [0.5, 2], [3, 3.5], [5.5, 1.5], [6.5, 2.5], [3.5, 4.5]])
+X = np.array(
+    [[1, 1], [2, 2], [3, 2], [1, 1.5], [2, 2.5], [3.5, 2], [1, 1.5],
+     [0.5, 2], [3, 3.5], [5.5, 1.5], [6.5, 2.5], [3.5, 4.5]])
 
+# ##python自带的迭代器模块
+# ##产生随机数据的中心
+# centers = [[1, 1], [2, 2], [3, 5], [5, 2], [6, 6]]
+# # centers = [[1, 1], [2, 2]]
+# ##产生的数据个数
+# n_samples = 200
+# ##生产数据
+# X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.5, random_state=0)
 
-##python自带的迭代器模块
-##产生随机数据的中心
-centers = [[1, 1], [2, 2], [3, 5], [5, 2], [6, 6]]
-# centers = [[1, 1], [2, 2]]
-##产生的数据个数
-n_samples = 200
-##生产数据
-X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.5, random_state=0)
-
-ms = MeanShift(bandwidth=0.5, bin_seeding=True)
+ms = MeanShift(bandwidth=bandwidth, bin_seeding=True)
 ##训练数据
 ms.fit(X)
 ##每个点的标签
