@@ -10,9 +10,9 @@ lineExtraX = 1
 
 
 ##需要拟合的函数func :指定函数的形状
-def func(p, x):
-    k, b = p
-    return k * x + b
+def func(inner_p, inner_x):
+    inner_k, inner_b = inner_p
+    return inner_k * inner_x + inner_b
 
 
 ##偏差函数：x,y都是列表:这里的x,y更上面的Xi,Yi中是一一对应的
