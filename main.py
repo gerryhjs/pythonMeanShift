@@ -5,9 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from itertools import cycle
 from scipy.optimize import leastsq
+from scipy.stats import pearsonr
 
 lineExtraX = 1
-bandwidth = 1.5
+bandwidth = 0.5
 
 
 ##需要拟合的函数func :指定函数的形状
@@ -21,18 +22,18 @@ def error(p, inner_x, inner_y):
     return func(p, inner_x) - inner_y
 
 
-X = np.array(
-    [[1, 1], [2, 2], [3, 2], [1, 1.5], [2, 2.5], [3.5, 2], [1, 1.5],
-     [0.5, 2], [3, 3.5], [5.5, 1.5], [6.5, 2.5], [3.5, 4.5]])
+# X = np.array(
+#     [[1, 1], [2, 2], [3, 2], [1, 1.5], [2, 2.5], [3.5, 2], [1, 1.5],
+#      [0.5, 2], [3, 3.5], [5.5, 1.5], [6.5, 2.5], [3.5, 4.5]])
 
-# ##python自带的迭代器模块
-# ##产生随机数据的中心
+##python自带的迭代器模块
+##产生随机数据的中心
 # centers = [[1, 1], [2, 2], [3, 5], [5, 2], [6, 6]]
-# # centers = [[1, 1], [2, 2]]
-# ##产生的数据个数
-# n_samples = 200
-# ##生产数据
-# X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.5, random_state=0)
+centers = [[1, 1], [2, 6]]
+##产生的数据个数
+n_samples = 200
+##生产数据
+X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.6, random_state=0)
 
 ms = MeanShift(bandwidth=bandwidth, bin_seeding=True)
 ##训练数据
@@ -56,7 +57,9 @@ sum_delta = 0
 
 minX = cluster_centers[0][0]
 maxX = cluster_centers[0][0]
-x_bar = np.mean(cluster_centers[0])
+data = np.array(cluster_centers).transpose()
+
+x_bar = np.mean(data[0])
 m = len(cluster_centers)
 # print(m)
 for i in range(m):
@@ -76,6 +79,9 @@ b = sum_delta / m
 
 print("求解的拟合直线为:")
 print("y=" + str(round(w, 2)) + "x+" + str(round(b, 2)))
+
+print("pearson=" + str(pearsonr(data[0], data[1])[0]))
+# print("p-value=" + str(pearsonr(data[0], data[1])[1]))
 
 ##绘图
 plt.figure(1)
