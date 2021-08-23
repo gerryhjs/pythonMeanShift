@@ -4,25 +4,26 @@ from sklearn.cluster import MeanShift, estimate_bandwidth
 import numpy as np
 import matplotlib.pyplot as plt
 from itertools import cycle
+
+# X = np.array(
+#     [[1, 1], [2, 2], [3, 2], [1, 1.5], [2, 2.5], [3.5, 2], [1, 1.5],
+#      [0.5, 2], [3, 3.5], [5.5, 1.5], [6.5, 2.5], [3.5, 4.5]])
+
+
 ##python自带的迭代器模块
-
 ##产生随机数据的中心
-centers = [[1, 1], [-1, -1], [1, -1]]
+centers = [[1, 1], [2, 2], [3, 5]]
 ##产生的数据个数
-n_samples = 10000
+n_samples = 200
 ##生产数据
-X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.6,
-                  random_state=0)
+X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.8, random_state=0)
 
-##带宽，也就是以某个点为核心时的搜索半径
-bandwidth = estimate_bandwidth(X, quantile=0.2, n_samples=500)
-##设置均值偏移函数
-ms = MeanShift(bandwidth=bandwidth, bin_seeding=True)
+ms = MeanShift(bandwidth=0.9, bin_seeding=True)
 ##训练数据
 ms.fit(X)
 ##每个点的标签
 labels = ms.labels_
-print(labels)
+# print(labels)
 ##簇中心的点的集合
 cluster_centers = ms.cluster_centers_
 print('cluster_centers:', cluster_centers)
