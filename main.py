@@ -8,7 +8,7 @@ from scipy.optimize import leastsq
 from scipy.stats import pearsonr
 
 lineExtraX = 1
-bandwidth = 0.5
+bandwidth = 0.15
 
 
 ##需要拟合的函数func :指定函数的形状
@@ -29,11 +29,11 @@ def error(p, inner_x, inner_y):
 ##python自带的迭代器模块
 ##产生随机数据的中心
 # centers = [[1, 1], [2, 2], [3, 5], [5, 2], [6, 6]]
-centers = [[1, 1], [2, 6]]
+centers = [[1, 1], [2, 2]]
 ##产生的数据个数
 n_samples = 200
 ##生产数据
-X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.6, random_state=0)
+X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.2, random_state=0)
 
 ms = MeanShift(bandwidth=bandwidth, bin_seeding=True)
 ##训练数据
