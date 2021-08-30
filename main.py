@@ -7,7 +7,10 @@ from itertools import cycle
 from scipy.optimize import leastsq
 from scipy.stats import pearsonr
 
+# 绘制线条的前后额外长度
 lineExtraX = 1
+
+# 搜索带宽
 bandwidth = 0.5
 
 
