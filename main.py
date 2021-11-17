@@ -6,12 +6,13 @@ import matplotlib.pyplot as plt
 from itertools import cycle
 from scipy.optimize import leastsq
 from scipy.stats import pearsonr
+import csv
 
 # 绘制线条的前后额外长度
 lineExtraX = 1
 
-# 搜索带宽
-bandwidth = 0.5
+# 搜索带宽 （可以自行调整）
+bandwidth = 500
 
 
 ##需要拟合的函数func :指定函数的形状
@@ -25,6 +26,18 @@ def error(p, inner_x, inner_y):
     return func(p, inner_x) - inner_y
 
 
+buffer = []
+with open('test.csv') as f:
+    f_csv = csv.reader(f)
+    for row in f_csv:
+        new_row = []
+        for n in row:
+            new_row.append(float(n))
+        row = new_row
+        print(row)
+        buffer.append(row)
+print(buffer)
+X = np.array(buffer)
 # X = np.array(
 #     [[1, 1], [2, 2], [3, 2], [1, 1.5], [2, 2.5], [3.5, 2], [1, 1.5],
 #      [0.5, 2], [3, 3.5], [5.5, 1.5], [6.5, 2.5], [3.5, 4.5]])
@@ -32,11 +45,11 @@ def error(p, inner_x, inner_y):
 ##python自带的迭代器模块
 ##产生随机数据的中心
 # centers = [[1, 1], [2, 2], [3, 5], [5, 2], [6, 6]]
-centers = [[1, 1], [2, 2], [1, 2], [2, 1]]
-##产生的数据个数
-n_samples = 200
-##生产数据
-X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.6)
+# centers = [[1, 1], [2, 2], [2, 3], [3, 2]]
+# ##产生的数据个数
+# n_samples = 200
+# ##生产数据
+# X, _ = make_blobs(n_samples=n_samples, centers=centers, cluster_std=0.3)
 
 ms = MeanShift(bandwidth=bandwidth, bin_seeding=True)
 ##训练数据
